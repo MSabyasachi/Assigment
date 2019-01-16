@@ -180,18 +180,19 @@ public class VideoPlayerActivity extends AppCompatActivity implements View.OnCli
 
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putInt("stop_position", videoView.getCurrentPosition());
+    protected void onPause() {
+        super.onPause();
+
+        stopPosition = videoView.getCurrentPosition();
         videoView.pause();
     }
 
-
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        stopPosition = savedInstanceState.getInt("stop_position");
+    protected void onResume() {
+        super.onResume();
+
         videoView.seekTo(stopPosition);
+        videoView.start();
     }
 
     @Override
