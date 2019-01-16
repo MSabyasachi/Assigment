@@ -63,8 +63,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements View.OnCli
         infoImageView.setOnClickListener(this);
         closeImageView.setOnClickListener(this);
 
-        //playersInfoLayout.setMinimumWidth(getDisplayDimensions().heightPixels / 3);
-
         ViewGroup.LayoutParams layoutParams = playersInfoLayout.getLayoutParams();
         layoutParams.width = (int) (getDisplayDimensions().widthPixels * 0.3);
         playersInfoLayout.setLayoutParams(layoutParams);
@@ -83,6 +81,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements View.OnCli
                 slideToLeft(playersInfoLayout);
                 infoImageView.setVisibility(View.GONE);
                 break;
+
             case R.id.closeLayoutImageView:
                 slideToRight(playersInfoLayout);
                 infoImageView.setVisibility(View.VISIBLE);
@@ -191,7 +190,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements View.OnCli
     protected void onResume() {
         super.onResume();
 
-
         videoView.seekTo(stopPosition);
         videoView.start();
     }
@@ -200,6 +198,5 @@ public class VideoPlayerActivity extends AppCompatActivity implements View.OnCli
     protected void onDestroy() {
         super.onDestroy();
     }
-
 }
 
