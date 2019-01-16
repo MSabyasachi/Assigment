@@ -191,6 +191,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements View.OnCli
     protected void onResume() {
         super.onResume();
 
+
         videoView.seekTo(stopPosition);
         videoView.start();
     }
