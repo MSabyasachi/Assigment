@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Assignment</string>
+    <string name="str_play_video">Play Video</string>
+    <string name="no_data_available">No Data Available</string>
+</resources>
