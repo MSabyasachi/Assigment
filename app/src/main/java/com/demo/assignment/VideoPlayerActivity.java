@@ -32,10 +32,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements View.OnCli
 
     private String videoUrl = "";
     private VideoView videoView;
-    private int stopPosition;
+    private int stopPosition = 0;
     private ProgressBar pProgressBar;
     private LinearLayout playersInfoLayout;
-
 
     private ImageView infoImageView, closeImageView;
 
@@ -46,11 +45,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (savedInstanceState != null) {
-            stopPosition = savedInstanceState.getInt("position");
-        }
-
         setContentView(R.layout.activity_video_player);
 
         pProgressBar = findViewById(R.id.progressBar);
@@ -168,7 +162,13 @@ public class VideoPlayerActivity extends AppCompatActivity implements View.OnCli
 
                 public void onPrepared(MediaPlayer mp) {
                     pProgressBar.setVisibility(View.GONE);
-                    videoView.start();
+                    videoView.seekTo(stopPosition);
+
+                    if (stopPosition == 0) {
+                        videoView.start();
+                    } else {
+                        videoView.pause();
+                    }
                 }
             });
         } catch (Exception e) {
@@ -180,25 +180,18 @@ public class VideoPlayerActivity extends AppCompatActivity implements View.OnCli
 
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        stopPosition = videoView.getCurrentPosition();
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("stop_position", videoView.getCurrentPosition());
         videoView.pause();
-        outState.putInt("position", stopPosition);
     }
 
-   /* @Override
-    protected void onPause() {
-        super.onPause();
-        stopPosition = videoView.getCurrentPosition();
-        videoView.pause();
-    }*/
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        stopPosition = savedInstanceState.getInt("stop_position");
         videoView.seekTo(stopPosition);
-        videoView.start();
     }
 
     @Override
